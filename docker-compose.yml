@@ -9,6 +9,22 @@ networks:
   back-tier:
 
 services:
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/vhost.d:/etc/nginx/vhost.d
+      - ./nginx/html:/usr/share/nginx/html
+      - ./nginx/certs:/etc/nginx/certs:ro
+      - ./nginx/proxy.conf:/etc/nginx/proxy.conf:ro
+    ports:
+      - "80:80"
+    networks:
+      - back-tier
+    restart: always
+    deploy:
+      mode: global
 
   prometheus:
     image: prom/prometheus:v2.1.0

@@ -37,6 +37,20 @@ scrape_configs:
          - targets: ['localhost:9090']
 
 
+  - job_name: 'nginx'
+
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 5s
+
+    dns_sd_configs:
+    - names:
+      - 'tasks.nginx'
+      type: 'A'
+      port: 80
+
+    static_configs:
+          - targets: ['nginx:80']
+
   - job_name: 'cadvisor'
 
     # Override the global default and scrape targets from this job every 5 seconds.
@@ -48,8 +62,8 @@ scrape_configs:
       type: 'A'
       port: 8080
 
-#     static_configs:
-#          - targets: ['cadvisor:8080']
+    static_configs:
+          - targets: ['cadvisor:8080']
 
   - job_name: 'node-exporter'
 
@@ -62,5 +76,5 @@ scrape_configs:
       type: 'A'
       port: 9100
     
-#     static_configs:
-#          - targets: ['node-exporter:9100']
+    static_configs:
+          - targets: ['node-exporter:9100']
